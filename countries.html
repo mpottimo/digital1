@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>List of contact</title>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+ <!-- <script src="js/script.js"></script>
+  <link rel="stylesheet" href="css/style.css">-->
+</head>
+<body>
+<div id="content"></div>
+<script>
+$.ajax({
+	"async": true,  
+	"crossDomain": true,  
+	"url" : "http://developer.digitalcube.rs:8999/api/countries", 
+	"method": "GET",  
+	"headers": {    
+		"authorization": " s00000UrSu6W42O76OopkSVPQCmq5LBctYZIFc3szdVxhe2fbIpeSPuNVd9g6oJT",  
+		},
+       success: function(response){
+           console.log(response);
+		   $('#content').append(response);
+		}
+	});
+	
+	
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>List of contact</title>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+ <!-- <script src="js/script.js"></script>
+  <link rel="stylesheet" href="css/style.css">-->
+</head>
+<body>
+<div id="content"></div>
+<script>
+var html='';
+$.ajax({
+    "dataType": "json",
+	//"url":"http://developer.digitalcube.rs:8999/api/contacts/id_contact/[ID_CONTACT]?[Param]",
+    "url": " http://developer.digitalcube.rs:8999/api/contacts/id_contact/c000005rI7iw16Ja?zip=11000",  
+	"method": "PATCH",  
+	"headers": {    
+		"authorization": " s00000UrSu6W42O76OopkSVPQCmq5LBctYZIFc3szdVxhe2fbIpeSPuNVd9g6oJT",  
+		},
+        success: function(data) {
+		
+            for(var key in data) {
+            var value = data[key];
+                html+='<div>'+key+':'+value+'</div>'
+            }
+            $("#content").append(html);
+            console.log(data);
+        }
+    });
+
+
+</script>
+
+</body>
+</html>

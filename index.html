@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>List of contact</title>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+ <!-- <script src="js/script.js"></script>
+  <link rel="stylesheet" href="css/style.css">-->
+</head>
+<body>
+<section>
+  <!--<div class="main">-->
+  <div class="err" id="add_err"></div>
+    <form>
+	
+    <div>
+      <label for="user">Username: </label>
+      <input type="text" name="username" id="username" />
+    </div>
+    <div>
+      <label for="pass">Password: </label>
+      <input type="password" name="password" id="password" />
+    </div>
+    <div>
+      <input type="button" id="login" name="login" value="Login" />
+    </div>
+  </form>
+  <div id="message"></div></section>
+    <div id="content"></div>
+  <!--</div>-->
+
+</body>
+<script>
+$(document).ready(function() {
+  $("form input:button").click(function() {
+     $("#add_err").css('display', 'none', 'important');
+	 $("#login").click(function(){	
+		  testuser=$("#username").val();
+		  testpassword=$("#password").val();
+		  console.log("name="+testuser+", pwd="+testpassword);
+		  
+
+	function make_base_auth(testuser, testpassword) {
+    var tok = testuser + ':' + testpassword;
+    var hash = btoa(tok);
+    return 'Basic ' + hash;
+}
+		  $.ajax({
+		  type: "POST",
+    url: 'http://developer.digitalcube.rs:8999/user/login?\\&username=testuser@digitalcube.rs&\password=testpassword',
+    testuser:username,
+    testpassword:password,
+	beforeSend: function(xhr) {
+    xhr.setRequestHeader('Authorization', make_base_auth(testuser, testpassword))
+},
+
+	success: function(html){    
+			if(html=='true')    {
+			 $("#add_err").html("right username or password");
+			 //window.location="dashboard.php";
+			}
+			else    {
+			$("#add_err").css('display', 'inline', 'important');
+			 $("#add_err").html("Wrong username or password");
+			}
+		   },
+}); 
+	
+		return false;
+	});
+  
+  
+  
+  
+});
+});
+</script>
+</html>

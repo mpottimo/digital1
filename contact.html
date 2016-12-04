@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>List of contact</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script src="js/script.js"></script>
+  <!--<link rel="stylesheet" href="css/style.css">-->
+</head>
+<body class="container">
+<section>
+<h1>List of contacts</h1>
+<a href='' id="addContact" class="btn btn-default">Add Contact</button></a> 
+<a href='' id="logout"  class="btn btn-default pull-right">Logout</a><hr>
+<div id="content"></div>
+<table  id="contact_table" class="table table-bordered">
+    <tr>
+        <th>Id</th>
+         <th>First Name</th>
+		 <th>Last Name</th>
+		 <th>Email</th>
+		 <th>Phone</th>
+		 <th>Country</th>
+		 <th>City</th>
+		 <th>Zip</th>
+		 <th>Action</th>
+    </tr>
+	<tbody></tbody>
+</table></section>
+<script>
+var settings = {  
+	"async": true,  
+	"crossDomain": true,  
+	"url": "http://developer.digitalcube.rs:8999/api/contacts",  
+	"method": "GET",  
+	"headers": {    
+		"authorization": "s00000UrSu6W42O76OopkSVPQCmq5LBctYZIFc3szdVxhe2fbIpeSPuNVd9g6oJT",  
+		}
+	}
+	
+	
+	
+$.ajax(settings).done(function (response) { 
+var tst = JSON.parse(response);
+
+response = tst.contacts;
+
+ var trHTML = '';
+ $.each(response, function (i,item) {
+ $('<tr>').html(
+        '<td>' + response[i].id + '</td><td>' + 
+		response[i].first_name + '</td><td>' + 
+		response[i].last_name + '</td><td>' + 
+		response[i].emails + '</td><td>' + 
+		response[i].phones + '</td><td>' + 
+		response[i].country + '</td><td>' + 
+		response[i].city + '</td><td>' + 
+		response[i].zip + '</td>'+
+		'<td><a href="" onclick="getContact(\'' + response[i].id + '\')">View</a> <br><a href="" onclick="edit(\'' + response[i].id + '\')">Edit</a> <br> <a href="#" onclick="del(\'' + response[i].id + '\')"">Delete</a></td>').appendTo('#contact_table');
+             
+          });
+});
+
+$("#logout").on('click', function() {
+  var html='';
+$.ajax({
+    "url": "  http://developer.digitalcube.rs:8999/user/logout",  
+	"method": "POST",  
+	"headers": {    
+		"authorization": " s00000UrSu6W42O76OopkSVPQCmq5LBctYZIFc3szdVxhe2fbIpeSPuNVd9g6oJT",  
+		},
+        success: function(response){
+           console.log(response);
+		$('#content').append(response);
+        }
+    });
+});
+
+$("#addContact").on('click', function() {
+  var html='';
+$.ajax({
+        "dataType": "json",
+        "url": " http://developer.digitalcube.rs:8999/api/contacts\?first_name=test&csv_phones=123,345,12333,4444&\csv_emails=test@digitalcube.rs,test@gmail.com&\last_name=test+lastname&\zip=11070&\city=Novi+Beograd&\country=Serbia",  
+	"method": "PUT",  
+	"headers": {    
+		"authorization": " s00000UrSu6W42O76OopkSVPQCmq5LBctYZIFc3szdVxhe2fbIpeSPuNVd9g6oJT",  
+		},
+        success: function(data) {
+		
+            for(var key in data) {
+            var value = data[key];
+                html+='<div>'+key+':'+value+'</div>'
+            }
+            $("#content").append(html);
+            console.log(data);
+        }
+    });
+});
+</script>
+
+</body>
+</html>
